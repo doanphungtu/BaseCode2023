@@ -11,8 +11,6 @@ const iconName = {
   success,
 };
 
-const SvgIcon = props => {
+export const SvgIcon = props => {
   return <SvgXml xml={get(iconName, props.name, 'info')} {...props} />;
 };
-
-export default SvgIcon;

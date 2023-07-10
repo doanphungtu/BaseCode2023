@@ -2,10 +2,7 @@ import {range} from 'lodash';
 import React, {useCallback} from 'react';
 import {FlatList, Image, StyleSheet, Text} from 'react-native';
 import {scale} from 'react-native-size-matters';
-import HStack from '~/components/Layout/HStack';
-import MainLayout from '~/components/Layout/MainLayout';
-import VStack from '~/components/Layout/VStack';
-import Pressable from '~/components/Pressable';
+import {HStack, MainLayout, Pressable, VStack} from '~/components';
 
 export const AnimatedFlatlistScreen = () => {
   const renderItem = useCallback(({item, index}) => {

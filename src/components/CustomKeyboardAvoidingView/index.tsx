@@ -3,7 +3,7 @@ import {KeyboardAvoidingView, Platform, StyleSheet} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useHeaderHeight} from '@react-navigation/elements';
 
-const CustomKeyboardAvoidingView = ({children, style}: any) => {
+export const CustomKeyboardAvoidingView = ({children, style}: any) => {
   const insets = useSafeAreaInsets();
   const headerHeight = useHeaderHeight();
 
@@ -17,5 +17,3 @@ const CustomKeyboardAvoidingView = ({children, style}: any) => {
     </KeyboardAvoidingView>
   );
 };
-
-export default CustomKeyboardAvoidingView;

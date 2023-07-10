@@ -2,12 +2,9 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 import Modal, {ModalProps} from 'react-native-modal';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import HStack from '../Layout/HStack';
-import VStack from '../Layout/VStack';
-import Pressable from '../Pressable';
-import {useTheme} from '~/hooks/useTheme';
-import Text from '../Text';
 import {scale} from 'react-native-size-matters';
+import {useTheme} from '~/hooks';
+import {HStack, Pressable, Text, VStack} from '..';
 
 interface Props extends ModalProps {
   children: any;
@@ -23,7 +20,7 @@ interface Props extends ModalProps {
   labelConfirm: any;
 }
 
-const ActionSheet = (props: Partial<Props>) => {
+export const ActionSheet = (props: Partial<Props>) => {
   const {
     children,
     onBackdropPress,
@@ -107,5 +104,3 @@ const ActionSheet = (props: Partial<Props>) => {
     </Modal>
   );
 };
-
-export default ActionSheet;

@@ -1,35 +1,30 @@
 import React from 'react';
-import {ActivityIndicator, StyleSheet, View, ViewProps} from 'react-native';
+import {ActivityIndicator} from 'react-native';
+import {VStack, VStackProps} from '..';
 
-interface Props extends ViewProps {
+interface Props extends VStackProps {
   isLoading: Boolean;
 }
 
-const Loading = (props: Props) => {
-  const {isLoading, style, ...rest} = props;
+export const Loading = (props: Partial<Props>) => {
+  const {isLoading, ...rest} = props;
 
   if (!isLoading) {
     return null;
   }
   return (
-    <View style={[styles.container, style]} {...rest}>
+    <VStack
+      flex={1}
+      justifyContent="center"
+      alignItems="center"
+      position="absolute"
+      backgroundColor={'rgba(0,0,0,0.2)'}
+      left={0}
+      right={0}
+      top={0}
+      bottom={0}
+      {...rest}>
       <ActivityIndicator size="large" color="white" />
-    </View>
+    </VStack>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(0,0,0,0.2)',
-  },
-});
-
-export default Loading;

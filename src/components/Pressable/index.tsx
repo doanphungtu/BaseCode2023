@@ -1,27 +1,27 @@
 import {debounce} from 'lodash';
 import React from 'react';
-import {TouchableOpacity, TouchableOpacityProps} from 'react-native';
+import {TouchableOpacity, TouchableOpacityProps, ViewStyle} from 'react-native';
 
-interface Props extends TouchableOpacityProps {
+export interface PressableProps extends ViewStyle {
+  _props: TouchableOpacityProps;
+  children: any;
   onPress?: any;
 }
 
-const Pressable = (props: Props) => {
-  const {children, onPress, ...rest} = props;
+export const Pressable = (props: Partial<PressableProps>) => {
+  const {_props, children, onPress, ...rest} = props;
 
-  const debounced = debounce(
-    () => {
-      onPress?.();
-    },
-    1000,
-    {leading: true, trailing: false},
-  );
+  const debounced = debounce(() => {
+    onPress?.();
+  }, 200);
 
   return (
-    <TouchableOpacity activeOpacity={0.5} onPress={debounced} {...rest}>
+    <TouchableOpacity
+      activeOpacity={0.5}
+      onPress={debounced}
+      style={[{...rest}]}
+      {..._props}>
       {children}
     </TouchableOpacity>
   );
 };
-
-export default Pressable;

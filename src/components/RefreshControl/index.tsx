@@ -1,10 +1,8 @@
 import React from 'react';
 import {RefreshControl, RefreshControlProps} from 'react-native';
-import {useTheme} from '~/hooks/useTheme';
+import {useTheme} from '~/hooks';
 
-const RefreshControlComponent = (props: RefreshControlProps) => {
+export const RefreshControlComponent = (props: RefreshControlProps) => {
   const {colors} = useTheme();
   return <RefreshControl tintColor={colors.primary[10]} {...props} />;
 };
-
-export default RefreshControlComponent;

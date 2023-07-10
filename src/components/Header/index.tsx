@@ -1,24 +1,20 @@
 import {useNavigation} from '@react-navigation/native';
-import React, {memo} from 'react';
-import {StyleProp, StyleSheet, Text, TextStyle, ViewStyle} from 'react-native';
+import React from 'react';
 import {scale} from 'react-native-size-matters';
 import IonIcons from 'react-native-vector-icons/Ionicons';
-import {useTheme} from '~/hooks/useTheme';
-import {fonts} from '~/themes';
-import HStack from '../Layout/HStack';
-import VStack from '../Layout/VStack';
-import Pressable from '../Pressable';
+import {useTheme} from '~/hooks';
+import {HStack, HStackProps, Pressable, Text, TextProps, VStack} from '..';
 
-interface Props {
+interface Props extends HStackProps {
   title: string;
-  _titleStyle: StyleProp<TextStyle>;
+  _titleStyle: TextProps;
   hasLeftIcon: Boolean;
   customLeftIcon: any;
   customRightIcon: any;
   onPressBackIcon: any;
 }
 
-const HeaderComponent = (props: Partial<Props> & ViewStyle) => {
+export const Header = (props: Partial<Props>) => {
   const {
     title,
     _titleStyle,
@@ -40,7 +36,8 @@ const HeaderComponent = (props: Partial<Props> & ViewStyle) => {
     }
     return (
       <Pressable
-        style={styles.backIcon}
+        paddingHorizontal={scale(16)}
+        paddingVertical={scale(4)}
         onPress={() => {
           if (!!onPressBackIcon) {
             onPressBackIcon?.();
@@ -69,7 +66,11 @@ const HeaderComponent = (props: Partial<Props> & ViewStyle) => {
       {getLeftIcon()}
       <VStack flex={1} alignItems="center">
         {!!title && (
-          <Text style={[styles.titleStyle, {color: 'black'}, _titleStyle]}>
+          <Text
+            fontSize={scale(18)}
+            medium
+            color={colors.text[10]}
+            {..._titleStyle}>
             {title}
           </Text>
         )}
@@ -78,16 +79,3 @@ const HeaderComponent = (props: Partial<Props> & ViewStyle) => {
     </HStack>
   );
 };
-
-const styles = StyleSheet.create({
-  titleStyle: {
-    fontSize: scale(18),
-    fontFamily: fonts.roboto.medium,
-  },
-  backIcon: {
-    paddingHorizontal: scale(16),
-    paddingVertical: scale(4),
-  },
-});
-
-export default memo(HeaderComponent);

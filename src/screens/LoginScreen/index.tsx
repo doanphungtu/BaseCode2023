@@ -6,10 +6,7 @@ import {ScrollView} from 'react-native';
 import {scale} from 'react-native-size-matters';
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import * as yup from 'yup';
-import FormInput from '~/components/FormInput';
-import Header from '~/components/Header';
-import MainLayout from '~/components/Layout/MainLayout';
-import VStack from '~/components/Layout/VStack';
+import {FormInput, Header, MainLayout, VStack} from '~/components';
 
 export const LoginScreen = () => {
   const {t} = useTranslation();
@@ -49,7 +46,7 @@ export const LoginScreen = () => {
               <IonIcons name="person" size={20} color="gray" />
             </VStack>
           )}
-          placeholder={t('common.emptyData')}
+          _props={{placeholder: t('common.emptyData')}}
           name="username"
           errorMessage={errors.username?.message}
         />

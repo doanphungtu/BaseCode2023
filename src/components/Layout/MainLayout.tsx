@@ -1,21 +1,19 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
-import {SafeAreaView, SafeAreaViewProps} from 'react-native-safe-area-context';
+import {useTheme} from '~/hooks';
+import {VStack, VStackProps} from '..';
 
-const MainLayout = (props: SafeAreaViewProps) => {
-  const {children, style, ...rest} = props;
+export const MainLayout = (props: Partial<VStackProps>) => {
+  const {children, ...rest} = props;
+  const {colors} = useTheme();
+
   return (
-    <SafeAreaView style={[styles.container, style]} {...rest}>
+    <VStack flex={1} backgroundColor={colors.white} {...rest}>
       {children}
-    </SafeAreaView>
+    </VStack>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-  },
-});
-
-export default MainLayout;
+MainLayout.defaultProps = {
+  safeAreaTop: true,
+  safeAreaBottom: true,
+};

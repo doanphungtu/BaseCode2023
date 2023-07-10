@@ -2,12 +2,14 @@ import React, {useCallback, useMemo, useState} from 'react';
 import {FlatList} from 'react-native';
 import {scale} from 'react-native-size-matters';
 import IonIcons from 'react-native-vector-icons/Ionicons';
-import ActionSheet from '~/components/ActionSheet';
-import MainLayout from '~/components/Layout/MainLayout';
-import VStack from '~/components/Layout/VStack';
-import ModalConfirm from '~/components/Modal/ModalConfirm';
-import Pressable from '~/components/Pressable';
-import Text from '~/components/Text';
+import {
+  ActionSheet,
+  MainLayout,
+  ModalConfirm,
+  Pressable,
+  Text,
+  VStack,
+} from '~/components';
 import {ANIMATED_FLATLIST_SCREEN, LOGIN_SCREEN} from '~/constants/ScreenName';
 import {navigate} from '~/services/navigationServices';
 
@@ -62,7 +64,6 @@ export const HomeScreen = () => {
         keyExtractor={(_, index) => String(index)}
         renderItem={renderItem}
       />
-      {/* {!!showModal && ( */}
       <ModalConfirm
         isVisible={showModal}
         message={'Modal test confirm nha'}
@@ -70,7 +71,6 @@ export const HomeScreen = () => {
           setShowModal(false);
         }}
       />
-      {/* )} */}
       <ActionSheet
         isVisible={showActionSheet}
         onBackdropPress={() => {

@@ -1,13 +1,13 @@
 import React from 'react';
 import {ViewProps, ViewStyle} from 'react-native';
-import {useTheme} from '~/hooks/useTheme';
-import VStack from '../Layout/VStack';
+import {useTheme} from '~/hooks';
+import {VStack} from '../Layout/VStack';
 
 interface Props extends ViewProps {
   vertical?: Boolean;
 }
 
-const Divider = (props: Props & ViewStyle) => {
+export const Divider = (props: Props & ViewStyle) => {
   const {vertical, ...rest} = props;
   const {colors} = useTheme();
 
@@ -30,5 +30,3 @@ const Divider = (props: Props & ViewStyle) => {
     />
   );
 };
-
-export default Divider;

@@ -1,10 +1,14 @@
 import React, {useMemo} from 'react';
-import {TextProps, Text as TextRN, TextStyle} from 'react-native';
-import {useTheme} from '~/hooks/useTheme';
+import {
+  TextProps as TextPropsRN,
+  Text as TextRN,
+  TextStyle,
+} from 'react-native';
+import {useTheme} from '~/hooks';
 
-interface Props {
+export interface TextProps {
   children: any;
-  _props: TextProps;
+  _props: TextPropsRN;
   light: boolean;
   lightItalic: boolean;
   italic: boolean;
@@ -12,9 +16,10 @@ interface Props {
   mediumItalic: boolean;
   bold: boolean;
   boldItalic: boolean;
+  font: 'roboto';
 }
 
-const Text = (props: Partial<Props> & TextStyle) => {
+export const Text = (props: Partial<TextProps> & TextStyle) => {
   const {
     children,
     _props,
@@ -25,6 +30,7 @@ const Text = (props: Partial<Props> & TextStyle) => {
     mediumItalic,
     bold,
     boldItalic,
+    font = 'roboto',
     ...rest
   } = props;
 
@@ -32,38 +38,32 @@ const Text = (props: Partial<Props> & TextStyle) => {
 
   const FontFamily = useMemo(() => {
     if (!!light) {
-      return fonts.roboto.light;
+      return fonts[font].light;
     }
     if (!!lightItalic) {
-      return fonts.roboto.lightItalic;
+      return fonts[font].lightItalic;
     }
     if (!!italic) {
-      return fonts.roboto.italic;
+      return fonts[font].italic;
     }
     if (!!medium) {
-      return fonts.roboto.medium;
+      return fonts[font].medium;
     }
     if (!!mediumItalic) {
-      return fonts.roboto.mediumItalic;
+      return fonts[font].mediumItalic;
     }
     if (!!bold) {
-      return fonts.roboto.bold;
+      return fonts[font].bold;
     }
     if (!!boldItalic) {
-      return fonts.roboto.boldItalic;
+      return fonts[font].boldItalic;
     }
-    return fonts.roboto.normal;
+    return fonts[font].normal;
   }, [
     bold,
     boldItalic,
-    fonts.roboto.bold,
-    fonts.roboto.boldItalic,
-    fonts.roboto.italic,
-    fonts.roboto.light,
-    fonts.roboto.lightItalic,
-    fonts.roboto.medium,
-    fonts.roboto.mediumItalic,
-    fonts.roboto.normal,
+    font,
+    fonts,
     italic,
     light,
     lightItalic,
@@ -77,5 +77,3 @@ const Text = (props: Partial<Props> & TextStyle) => {
     </TextRN>
   );
 };
-
-export default Text;
