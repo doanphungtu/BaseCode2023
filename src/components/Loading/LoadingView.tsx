@@ -3,7 +3,7 @@ import {ActivityIndicator} from 'react-native';
 import {useTheme} from '~/hooks';
 import {VStack, VStackProps} from '..';
 
-export const LoadingView = (props: VStackProps) => {
+export const LoadingView = (props: Partial<VStackProps>) => {
   const {colors} = useTheme();
   return (
     <VStack
@@ -12,7 +12,7 @@ export const LoadingView = (props: VStackProps) => {
       alignItems="center"
       backgroundColor={colors.white}
       {...props}>
-      <ActivityIndicator size="large" color="white" />
+      <ActivityIndicator size="large" color={colors.primary[10]} />
     </VStack>
   );
 };

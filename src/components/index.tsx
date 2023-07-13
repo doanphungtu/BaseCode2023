@@ -12,6 +12,7 @@ export * from './Loading/LoadingLayout';
 export * from './Loading/LoadingView';
 export * from './LoadMore';
 export * from './Modal/ModalConfirm';
+export * from './Modal/ModalCustom';
 export * from './Pressable';
 export * from './RefreshControl';
 export * from './SvgIcons';

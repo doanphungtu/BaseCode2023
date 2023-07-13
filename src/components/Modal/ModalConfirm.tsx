@@ -4,10 +4,8 @@ import Modal, {ModalProps} from 'react-native-modal';
 import {scale} from 'react-native-size-matters';
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import {MY_HEIGHT} from '~/constants/common';
-import {useKeyboardBottomInset} from '~/hooks/useKeyboardBottomInset';
 import {useTheme} from '~/hooks';
 import {
-  Divider,
   HStack,
   HStackProps,
   Pressable,
@@ -19,13 +17,13 @@ import {
 } from '..';
 
 interface Props extends ModalProps {
-  _container: VStackProps;
-  _title: TextProps;
-  _footer: HStackProps;
-  _labelCancelContainer: PressableProps;
-  _labelCancel: TextProps;
-  _labelConfirmContainer: PressableProps;
-  _labelConfirm: TextProps;
+  _container: Partial<VStackProps>;
+  _title: Partial<TextProps>;
+  _footer: Partial<HStackProps>;
+  _labelCancelContainer: Partial<PressableProps>;
+  _labelCancel: Partial<TextProps>;
+  _labelConfirmContainer: Partial<PressableProps>;
+  _labelConfirm: Partial<TextProps>;
   hasCloseIcon: boolean;
   onBackdropPress: any;
   title: any;
@@ -33,6 +31,9 @@ interface Props extends ModalProps {
   labelCancel: any;
   labelConfirm: any;
   onConfirm: any;
+  footerVertical: boolean;
+  hideCancelButton: boolean;
+  hideConfirmButton: boolean;
 }
 
 export const ModalConfirm = (props: Partial<Props>) => {
@@ -51,27 +52,28 @@ export const ModalConfirm = (props: Partial<Props>) => {
     labelCancel,
     labelConfirm,
     onConfirm,
+    footerVertical,
+    hideCancelButton,
+    hideConfirmButton,
     ...rest
   } = props;
   const {t} = useTranslation();
   const {colors} = useTheme();
 
-  const {bottom, keyboardIsShow} = useKeyboardBottomInset();
-
   return (
     <Modal useNativeDriver={true} onBackdropPress={onBackdropPress} {...rest}>
       <VStack
-        backgroundColor={colors.white}
-        borderRadius={scale(8)}
-        maxHeight={keyboardIsShow ? MY_HEIGHT - bottom - 32 : 0.8 * MY_HEIGHT}
+        backgroundColor={colors.gray[40]}
+        maxHeight={0.8 * MY_HEIGHT}
+        borderRadius={scale(10)}
         {..._container}>
         <HStack padding={scale(16)} paddingRight={0} alignItems="center">
           <VStack flex={1}>
-            <Text _props={{numberOfLines: 1}} bold fontSize={scale(18)}>
+            <Text _props={{numberOfLines: 1}} bold fontSize={scale(20)}>
               {title || t('common.notification')}
             </Text>
           </VStack>
-          {!hasCloseIcon && (
+          {!!hasCloseIcon && (
             <Pressable paddingHorizontal={scale(16)} onPress={onBackdropPress}>
               <IonIcons name="close" color={colors.black} size={25} />
             </Pressable>
@@ -80,37 +82,85 @@ export const ModalConfirm = (props: Partial<Props>) => {
         <VStack padding={scale(16)} paddingTop={0} minHeight={scale(60)}>
           <Text {..._title}>{message || ''}</Text>
         </VStack>
-        <Divider />
-        <HStack {..._footer}>
-          <Pressable
-            flex={1}
-            height={scale(50)}
-            justifyContent="center"
-            alignItems="center"
-            {..._labelCancelContainer}
-            onPress={onBackdropPress}>
-            <Text _props={{numberOfLines: 1}} {..._labelCancel}>
-              {labelCancel || t('common.cancel')}
-            </Text>
-          </Pressable>
-          <Divider vertical />
-          <Pressable
-            flex={1}
-            height={scale(50)}
-            justifyContent="center"
-            alignItems="center"
-            {..._labelConfirmContainer}
-            onPress={() => {
-              onBackdropPress();
-              setTimeout(() => {
-                onConfirm?.();
-              }, 200);
-            }}>
-            <Text _props={{numberOfLines: 1}} {..._labelConfirm}>
-              {labelConfirm || t('common.ok')}
-            </Text>
-          </Pressable>
-        </HStack>
+        {!!footerVertical && (
+          <VStack padding={scale(16)} {..._footer}>
+            <Pressable
+              borderRadius={scale(8)}
+              backgroundColor={colors.primary[10]}
+              paddingVertical={scale(10)}
+              justifyContent="center"
+              alignItems="center"
+              onPress={onConfirm}
+              {..._labelConfirmContainer}>
+              <Text
+                medium
+                fontSize={scale(16)}
+                color="white"
+                {..._labelConfirm}>
+                {labelConfirm || t('common.ok')}
+              </Text>
+            </Pressable>
+            <VStack height={scale(16)} />
+            <Pressable
+              borderRadius={scale(8)}
+              backgroundColor={colors.white}
+              paddingVertical={scale(10)}
+              justifyContent="center"
+              alignItems="center"
+              onPress={() => {
+                onBackdropPress?.();
+              }}
+              {..._labelCancelContainer}>
+              <Text medium fontSize={scale(16)} {..._labelCancel}>
+                {labelCancel || t('common.cancel')}
+              </Text>
+            </Pressable>
+          </VStack>
+        )}
+        {!!footerVertical ||
+        (!!hideCancelButton && !!hideConfirmButton) ? null : (
+          <HStack padding={scale(16)}>
+            {!hideCancelButton && (
+              <Pressable
+                borderRadius={scale(8)}
+                backgroundColor={colors.white}
+                flex={1}
+                paddingVertical={scale(10)}
+                justifyContent="center"
+                alignItems="center"
+                onPress={() => {
+                  onBackdropPress?.();
+                }}
+                {..._labelCancelContainer}>
+                <Text medium fontSize={scale(16)} {..._labelCancel}>
+                  {labelCancel || t('common.cancel')}
+                </Text>
+              </Pressable>
+            )}
+            {!hideCancelButton && !hideConfirmButton && (
+              <VStack width={scale(16)} />
+            )}
+            {!hideConfirmButton && (
+              <Pressable
+                borderRadius={scale(8)}
+                backgroundColor={colors.primary[10]}
+                flex={1}
+                paddingVertical={scale(10)}
+                justifyContent="center"
+                alignItems="center"
+                onPress={onConfirm}
+                {..._labelConfirmContainer}>
+                <Text
+                  medium
+                  fontSize={scale(16)}
+                  color="white"
+                  {..._labelConfirm}>
+                  {labelConfirm || t('common.ok')}
+                </Text>
+              </Pressable>
+            )}
+          </HStack>
+        )}
       </VStack>
     </Modal>
   );

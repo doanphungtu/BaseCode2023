@@ -2,12 +2,32 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 import Modal, {ModalProps} from 'react-native-modal';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useTheme} from '~/hooks/useTheme';
+import {
+  HStack,
+  VStack,
+  Text,
+  Pressable,
+  PressableProps,
+  TextProps,
+  VStackProps,
+  HStackProps,
+} from '..';
 import {scale} from 'react-native-size-matters';
-import {useTheme} from '~/hooks';
-import {HStack, Pressable, Text, VStack} from '..';
 
-interface Props extends ModalProps {
+export interface ActionSheetProps extends ModalProps {
   children: any;
+  _titleContainer: Partial<VStackProps>;
+  _title: Partial<TextProps>;
+  _leftLabelHeaderContainer: Partial<PressableProps>;
+  _leftLabelHeader: Partial<TextProps>;
+  _rightLabelHeaderContainer: Partial<PressableProps>;
+  _rightLabelHeader: Partial<TextProps>;
+  _footer: Partial<HStackProps>;
+  _labelCancelContainer: Partial<PressableProps>;
+  _labelCancel: Partial<TextProps>;
+  _labelConfirmContainer: Partial<PressableProps>;
+  _labelConfirm: Partial<TextProps>;
   onBackdropPress: any;
   title: any;
   renderLeftHeader: any;
@@ -18,11 +38,26 @@ interface Props extends ModalProps {
   onClickRightHeader: any;
   labelCancel: any;
   labelConfirm: any;
+  onConfirm: any;
+  footerVertical: boolean;
+  hideCancelButton: boolean;
+  hideConfirmButton: boolean;
 }
 
-export const ActionSheet = (props: Partial<Props>) => {
+export const ActionSheet = (props: Partial<ActionSheetProps>) => {
   const {
     children,
+    _titleContainer,
+    _title,
+    _leftLabelHeaderContainer,
+    _leftLabelHeader,
+    _rightLabelHeaderContainer,
+    _rightLabelHeader,
+    _footer,
+    _labelCancelContainer,
+    _labelCancel,
+    _labelConfirm,
+    _labelConfirmContainer,
     onBackdropPress,
     title,
     renderLeftHeader,
@@ -31,6 +66,12 @@ export const ActionSheet = (props: Partial<Props>) => {
     rightLabelHeader,
     onClickLeftHeader,
     onClickRightHeader,
+    labelCancel,
+    labelConfirm,
+    onConfirm,
+    footerVertical,
+    hideCancelButton,
+    hideConfirmButton,
     ...rest
   } = props;
   const {t} = useTranslation();
@@ -46,6 +87,8 @@ export const ActionSheet = (props: Partial<Props>) => {
       <VStack
         backgroundColor={colors.white}
         maxHeight="90%"
+        borderTopLeftRadius={10}
+        borderTopRightRadius={10}
         paddingBottom={bottom}>
         <HStack height={50}>
           {!!renderLeftHeader && renderLeftHeader?.()}
@@ -56,18 +99,20 @@ export const ActionSheet = (props: Partial<Props>) => {
                 setTimeout(() => {
                   onClickLeftHeader?.();
                 }, 200);
-              }}>
-              <Text color={colors.primary[10]}>
+              }}
+              {..._leftLabelHeaderContainer}>
+              <Text color={colors.primary[10]} {..._leftLabelHeader}>
                 {leftLabelHeader || t('common.cancel')}
               </Text>
             </Pressable>
           )}
-          <VStack flex={1}>
+          <VStack flex={1} justifyContent="center" {..._titleContainer}>
             <Text
               _props={{numberOfLines: 1}}
-              fontSize={scale(18)}
+              fontSize={18}
               medium
-              alignSelf="center">
+              alignSelf="center"
+              {..._title}>
               {title || t('common.notification')}
             </Text>
           </VStack>
@@ -79,27 +124,94 @@ export const ActionSheet = (props: Partial<Props>) => {
                 setTimeout(() => {
                   onClickRightHeader?.();
                 }, 200);
-              }}>
-              <Text color={colors.primary[10]}>
+              }}
+              {..._rightLabelHeaderContainer}>
+              <Text color={colors.primary[10]} {..._rightLabelHeader}>
                 {rightLabelHeader || t('common.ok')}
               </Text>
             </Pressable>
           )}
         </HStack>
         {children}
-        {/* <HStack>
-          <Pressable style={styles.button} onPress={onBackdropPress}>
-            <Text numberOfLines={1} style={[styles.labelCancel]}>
-              {labelCancel || t('common.cancel')}
-            </Text>
-          </Pressable>
-          <Divider vertical />
-          <Pressable style={styles.button} onPress={onBackdropPress}>
-            <Text numberOfLines={1} style={[styles.labelConfirm]}>
-              {labelConfirm || t('common.ok')}
-            </Text>
-          </Pressable>
-        </HStack> */}
+        {!!footerVertical && (
+          <VStack padding={scale(16)} {..._footer}>
+            <Pressable
+              borderRadius={scale(8)}
+              backgroundColor={colors.primary[10]}
+              paddingVertical={scale(10)}
+              justifyContent="center"
+              alignItems="center"
+              onPress={onConfirm}
+              {..._labelConfirmContainer}>
+              <Text
+                medium
+                fontSize={scale(16)}
+                color="white"
+                {..._labelConfirm}>
+                {labelConfirm || t('common.ok')}
+              </Text>
+            </Pressable>
+            <VStack height={scale(16)} />
+            <Pressable
+              borderRadius={scale(8)}
+              backgroundColor={colors.white}
+              paddingVertical={scale(10)}
+              justifyContent="center"
+              alignItems="center"
+              onPress={() => {
+                onBackdropPress?.();
+              }}
+              {..._labelCancelContainer}>
+              <Text medium fontSize={scale(16)} {..._labelCancel}>
+                {labelCancel || t('common.cancel')}
+              </Text>
+            </Pressable>
+          </VStack>
+        )}
+        {!!footerVertical ||
+        (!!hideCancelButton && !!hideConfirmButton) ? null : (
+          <HStack padding={scale(16)}>
+            {!hideCancelButton && (
+              <Pressable
+                borderRadius={scale(8)}
+                backgroundColor={colors.white}
+                flex={1}
+                paddingVertical={scale(10)}
+                justifyContent="center"
+                alignItems="center"
+                onPress={() => {
+                  onBackdropPress?.();
+                }}
+                {..._labelCancelContainer}>
+                <Text medium fontSize={scale(16)} {..._labelCancel}>
+                  {labelCancel || t('common.cancel')}
+                </Text>
+              </Pressable>
+            )}
+            {!hideCancelButton && !hideConfirmButton && (
+              <VStack width={scale(16)} />
+            )}
+            {!hideConfirmButton && (
+              <Pressable
+                borderRadius={scale(8)}
+                backgroundColor={colors.primary[10]}
+                flex={1}
+                paddingVertical={scale(10)}
+                justifyContent="center"
+                alignItems="center"
+                onPress={onConfirm}
+                {..._labelConfirmContainer}>
+                <Text
+                  medium
+                  fontSize={scale(16)}
+                  color="white"
+                  {..._labelConfirm}>
+                  {labelConfirm || t('common.ok')}
+                </Text>
+              </Pressable>
+            )}
+          </HStack>
+        )}
       </VStack>
     </Modal>
   );

@@ -1,6 +1,5 @@
 import React from 'react';
-import {LoadingView} from './LoadingView';
-import {VStackProps} from '..';
+import {VStackProps, LoadingView} from '..';
 
 interface Props extends VStackProps {
   isLoading: boolean;

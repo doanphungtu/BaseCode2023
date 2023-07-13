@@ -3,11 +3,20 @@ import React from 'react';
 import {scale} from 'react-native-size-matters';
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import {useTheme} from '~/hooks';
-import {HStack, HStackProps, Pressable, Text, TextProps, VStack} from '..';
+import {
+  HStack,
+  HStackProps,
+  Pressable,
+  Text,
+  TextProps,
+  VStack,
+  VStackProps,
+} from '..';
 
 interface Props extends HStackProps {
   title: string;
-  _titleStyle: TextProps;
+  _titleContainer: Partial<VStackProps>;
+  _title: Partial<TextProps>;
   hasLeftIcon: Boolean;
   customLeftIcon: any;
   customRightIcon: any;
@@ -17,7 +26,8 @@ interface Props extends HStackProps {
 export const Header = (props: Partial<Props>) => {
   const {
     title,
-    _titleStyle,
+    _titleContainer,
+    _title,
     hasLeftIcon = true,
     customLeftIcon,
     customRightIcon,
@@ -47,8 +57,8 @@ export const Header = (props: Partial<Props>) => {
         }}>
         <IonIcons
           name="chevron-back-outline"
-          size={scale(22)}
-          color={colors.text[10]}
+          size={scale(25)}
+          color={colors.primary[10]}
         />
       </Pressable>
     );
@@ -62,15 +72,16 @@ export const Header = (props: Partial<Props>) => {
   };
 
   return (
-    <HStack alignItems="center" minHeight={scale(50)} {...rest}>
+    <HStack alignItems="center" paddingVertical={scale(8)} {...rest}>
       {getLeftIcon()}
-      <VStack flex={1} alignItems="center">
+      <VStack flex={1} alignItems="center" {..._titleContainer}>
         {!!title && (
           <Text
             fontSize={scale(18)}
             medium
             color={colors.text[10]}
-            {..._titleStyle}>
+            _props={{numberOfLines: 1}}
+            {..._title}>
             {title}
           </Text>
         )}

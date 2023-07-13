@@ -1,6 +1,7 @@
 import React from 'react';
 import {ActivityIndicator} from 'react-native';
 import {VStack, VStackProps} from '..';
+import {useTheme} from '~/hooks';
 
 interface Props extends VStackProps {
   isLoading: Boolean;
@@ -8,6 +9,7 @@ interface Props extends VStackProps {
 
 export const Loading = (props: Partial<Props>) => {
   const {isLoading, ...rest} = props;
+  const {colors} = useTheme();
 
   if (!isLoading) {
     return null;
@@ -24,7 +26,7 @@ export const Loading = (props: Partial<Props>) => {
       top={0}
       bottom={0}
       {...rest}>
-      <ActivityIndicator size="large" color="white" />
+      <ActivityIndicator size="large" color={colors.primary[10]} />
     </VStack>
   );
 };

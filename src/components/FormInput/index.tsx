@@ -6,19 +6,19 @@ import IonIcons from 'react-native-vector-icons/Ionicons';
 import {useTheme} from '~/hooks';
 import {HStack, HStackProps, Pressable, Text, VStack} from '..';
 
-interface Props extends TextStyle {
-  _container: HStackProps;
+export interface FormInputProps extends TextStyle {
+  _container: Partial<HStackProps>;
   isPassword: boolean;
   name: any;
   control: any;
   errorMessage: any;
   renderLeftElement: any;
   renderRightElement: any;
-  _props: TextInputProps;
-  font: 'roboto';
+  _props: Partial<TextInputProps>;
+  font: 'fs_pf_beausans_pro';
 }
 
-export const FormInput = (props: Partial<Props>) => {
+export const FormInput = (props: Partial<FormInputProps>) => {
   const {
     _props,
     _container,
@@ -28,7 +28,7 @@ export const FormInput = (props: Partial<Props>) => {
     errorMessage,
     renderLeftElement,
     renderRightElement,
-    font = 'roboto',
+    font = 'fs_pf_beausans_pro',
     ...rest
   } = props;
   const [showText, setShowText] = useState(isPassword ? false : true);
@@ -132,11 +132,6 @@ export const FormInput = (props: Partial<Props>) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    height: scale(45),
-    borderRadius: scale(8),
-  },
   input: {
     flex: 1,
     fontSize: scale(14),
