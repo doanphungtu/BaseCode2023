@@ -63,7 +63,7 @@ export const ModalConfirm = (props: Partial<Props>) => {
   return (
     <Modal useNativeDriver={true} onBackdropPress={onBackdropPress} {...rest}>
       <VStack
-        backgroundColor={colors.gray[40]}
+        backgroundColor={colors.gray[20]}
         maxHeight={0.8 * MY_HEIGHT}
         borderRadius={scale(10)}
         {..._container}>
@@ -80,7 +80,9 @@ export const ModalConfirm = (props: Partial<Props>) => {
           )}
         </HStack>
         <VStack padding={scale(16)} paddingTop={0} minHeight={scale(60)}>
-          <Text {..._title}>{message || ''}</Text>
+          <Text fontSize={scale(16)} {..._title}>
+            {message || ''}
+          </Text>
         </VStack>
         {!!footerVertical && (
           <VStack padding={scale(16)} {..._footer}>

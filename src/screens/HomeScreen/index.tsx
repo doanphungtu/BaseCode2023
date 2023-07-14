@@ -12,6 +12,7 @@ import {
 } from '~/components';
 import {ANIMATED_FLATLIST_SCREEN, LOGIN_SCREEN} from '~/constants/ScreenName';
 import {navigate} from '~/services/navigationServices';
+import {showAlert} from '~/utils/alert';
 
 export const HomeScreen = () => {
   const [showModal, setShowModal] = useState(false);
@@ -29,6 +30,7 @@ export const HomeScreen = () => {
         name: 'Modal confirm',
         onPress: () => {
           setShowModal(true);
+          showAlert('Test Alert');
         },
       },
       {

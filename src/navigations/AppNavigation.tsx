@@ -12,6 +12,7 @@ import {useAppSelector} from '~/hooks/useAppSelector';
 import {AnimatedFlatlistScreen, HomeScreen, LoginScreen} from '~/screens';
 import {navigationRef} from '~/services/navigationServices';
 import i18n from '~/translations';
+import Toast from 'react-native-toast-message';
 
 const Stack = createNativeStackNavigator();
 
@@ -46,6 +47,7 @@ const AppNavigation = () => {
         />
       </Stack.Navigator>
       <Loading isLoading={isLoading} />
+      <Toast />
     </NavigationContainer>
   );
 };
