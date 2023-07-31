@@ -1,11 +1,13 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {useDispatch} from 'react-redux';
 import {ThemeEnum} from '~/models/common';
+import {fonts as Fonts} from '~/themes';
 
 /* ------------- Initial State ------------- */
 const initialState = {
   language: 'vi',
   theme: ThemeEnum.light,
+  font: Object.keys(Fonts)[1],
 };
 
 const reducers = {

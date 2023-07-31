@@ -17,3 +17,4 @@ export * from './Pressable';
 export * from './RefreshControl';
 export * from './SvgIcons';
 export * from './Text';
+export * from './BottomSheet';

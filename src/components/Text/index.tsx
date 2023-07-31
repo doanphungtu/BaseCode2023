@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import {useTheme} from '~/hooks';
 
-export interface TextProps {
+export interface TextProps extends TextStyle {
   children: any;
   _props: TextPropsRN;
   light: boolean;
@@ -16,10 +16,9 @@ export interface TextProps {
   mediumItalic: boolean;
   bold: boolean;
   boldItalic: boolean;
-  font: 'roboto';
 }
 
-export const Text = (props: Partial<TextProps> & TextStyle) => {
+export const Text = (props: Partial<TextProps>) => {
   const {
     children,
     _props,
@@ -30,39 +29,37 @@ export const Text = (props: Partial<TextProps> & TextStyle) => {
     mediumItalic,
     bold,
     boldItalic,
-    font = 'roboto',
     ...rest
   } = props;
 
-  const {fonts} = useTheme();
+  const {colors, fonts} = useTheme();
 
   const FontFamily = useMemo(() => {
     if (!!light) {
-      return fonts[font].light;
+      return fonts.light;
     }
     if (!!lightItalic) {
-      return fonts[font].lightItalic;
+      return fonts.lightItalic;
     }
     if (!!italic) {
-      return fonts[font].italic;
+      return fonts.italic;
     }
     if (!!medium) {
-      return fonts[font].medium;
+      return fonts.medium;
     }
     if (!!mediumItalic) {
-      return fonts[font].mediumItalic;
+      return fonts.mediumItalic;
     }
     if (!!bold) {
-      return fonts[font].bold;
+      return fonts.bold;
     }
     if (!!boldItalic) {
-      return fonts[font].boldItalic;
+      return fonts.boldItalic;
     }
-    return fonts[font].normal;
+    return fonts.normal;
   }, [
     bold,
     boldItalic,
-    font,
     fonts,
     italic,
     light,
@@ -72,7 +69,9 @@ export const Text = (props: Partial<TextProps> & TextStyle) => {
   ]);
 
   return (
-    <TextRN {..._props} style={[{fontFamily: FontFamily}, {...rest}]}>
+    <TextRN
+      {..._props}
+      style={[{fontFamily: FontFamily, color: colors.text[10]}, {...rest}]}>
       {children}
     </TextRN>
   );

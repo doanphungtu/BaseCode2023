@@ -56,7 +56,7 @@ export const Header = (props: Partial<Props>) => {
           }
         }}>
         <IonIcons
-          name="chevron-back-outline"
+          name="arrow-back"
           size={scale(25)}
           color={colors.primary[10]}
         />
@@ -77,8 +77,8 @@ export const Header = (props: Partial<Props>) => {
       <VStack flex={1} alignItems="center" {..._titleContainer}>
         {!!title && (
           <Text
-            fontSize={scale(18)}
-            medium
+            fontSize={scale(20)}
+            bold
             color={colors.text[10]}
             _props={{numberOfLines: 1}}
             {..._title}>

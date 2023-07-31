@@ -4,6 +4,7 @@ import {StyleSheet, TextInput, TextInputProps, TextStyle} from 'react-native';
 import {scale} from 'react-native-size-matters';
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import {useTheme} from '~/hooks';
+import {store} from '~/stores';
 import {HStack, HStackProps, Pressable, Text, VStack} from '..';
 
 export interface FormInputProps extends TextStyle {
@@ -15,7 +16,7 @@ export interface FormInputProps extends TextStyle {
   renderLeftElement: any;
   renderRightElement: any;
   _props: Partial<TextInputProps>;
-  font: 'fs_pf_beausans_pro';
+  font: any;
 }
 
 export const FormInput = (props: Partial<FormInputProps>) => {
@@ -28,7 +29,7 @@ export const FormInput = (props: Partial<FormInputProps>) => {
     errorMessage,
     renderLeftElement,
     renderRightElement,
-    font = 'fs_pf_beausans_pro',
+    font = store.getState().session.font,
     ...rest
   } = props;
   const [showText, setShowText] = useState(isPassword ? false : true);
@@ -44,7 +45,7 @@ export const FormInput = (props: Partial<FormInputProps>) => {
               width="100%"
               height={scale(45)}
               borderRadius={scale(8)}
-              backgroundColor={colors.gray[20]}
+              backgroundColor={colors.gray[30]}
               borderColor={colors.red[10]}
               borderWidth={!!errorMessage ? 1 : 0}
               {..._container}>
@@ -54,7 +55,8 @@ export const FormInput = (props: Partial<FormInputProps>) => {
                   styles.input,
                   {
                     color: colors.text[10],
-                    fontFamily: fonts[font].normal,
+                    fontFamily: fonts.normal,
+                    fontSize: scale(16),
                   },
                   {...rest},
                 ]}
@@ -97,7 +99,7 @@ export const FormInput = (props: Partial<FormInputProps>) => {
       width="100%"
       height={scale(45)}
       borderRadius={scale(8)}
-      backgroundColor={colors.gray[20]}
+      backgroundColor={colors.gray[30]}
       {..._container}>
       {renderLeftElement && renderLeftElement?.()}
       <TextInput
@@ -105,7 +107,8 @@ export const FormInput = (props: Partial<FormInputProps>) => {
           styles.input,
           {
             color: colors.text[10],
-            fontFamily: fonts[font].normal,
+            fontFamily: fonts.normal,
+            fontSize: scale(16),
           },
           {...rest},
         ]}

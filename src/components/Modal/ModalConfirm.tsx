@@ -63,7 +63,7 @@ export const ModalConfirm = (props: Partial<Props>) => {
   return (
     <Modal useNativeDriver={true} onBackdropPress={onBackdropPress} {...rest}>
       <VStack
-        backgroundColor={colors.gray[20]}
+        backgroundColor={colors.white}
         maxHeight={0.8 * MY_HEIGHT}
         borderRadius={scale(10)}
         {..._container}>
@@ -105,7 +105,7 @@ export const ModalConfirm = (props: Partial<Props>) => {
             <VStack height={scale(16)} />
             <Pressable
               borderRadius={scale(8)}
-              backgroundColor={colors.white}
+              backgroundColor={colors.gray[30]}
               paddingVertical={scale(10)}
               justifyContent="center"
               alignItems="center"
@@ -125,7 +125,7 @@ export const ModalConfirm = (props: Partial<Props>) => {
             {!hideCancelButton && (
               <Pressable
                 borderRadius={scale(8)}
-                backgroundColor={colors.white}
+                backgroundColor={colors.gray[30]}
                 flex={1}
                 paddingVertical={scale(10)}
                 justifyContent="center"

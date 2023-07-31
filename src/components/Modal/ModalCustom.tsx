@@ -60,7 +60,7 @@ export const ModalCustom = (props: Partial<ModalCustomProps>) => {
   return (
     <Modal useNativeDriver={true} onBackdropPress={onBackdropPress} {...rest}>
       <VStack
-        backgroundColor={colors.gray[40]}
+        backgroundColor={colors.white}
         borderRadius={scale(10)}
         maxHeight={0.8 * MY_HEIGHT}
         {..._container}>
@@ -70,7 +70,7 @@ export const ModalCustom = (props: Partial<ModalCustomProps>) => {
             {!hideCancelButton && (
               <Pressable
                 borderRadius={8}
-                backgroundColor={colors.white}
+                backgroundColor={colors.gray[30]}
                 flex={1}
                 paddingVertical={scale(10)}
                 justifyContent="center"
